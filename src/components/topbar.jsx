@@ -16,11 +16,31 @@ export const Topbar = ()=>{
       setIshomepage(location.pathname === '/' ? true : false);
     },[location]);
 
-    const toggleSidebar = ()=>{
-        document.getElementById('nav_overlay').style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        context.setIsactive(!context.isactive);
+    function fullscreenSidebarToggle(width, ml){
+        // context.setSidebarArrow(!(context.sidebarArrow));
+        document.querySelectorAll('.topbar , .master_container').forEach((element)=>{
+          element.style.width = width;
+          element.style.marginLeft = ml;
+        });
     }
+
+    const toggleSidebar = ()=>{
+      window.innerWidth >= 1200 ? (context.isSidebarActive ? fullscreenSidebarToggle('100%', '0px') : fullscreenSidebarToggle('calc(100% - 238px)','238px')) : (document.body.style.overflow = 'hidden', document.getElementById('nav_overlay').style.display = 'block');
+      context.setIsSidebarActive(!context.isSidebarActive);
+    }
+
+    // const resizer = window.onresize = ()=>{
+    //   const width = window.innerWidth;
+    //   const boolVal = width >=1200 ? true : false;
+    //   !(sidebarClosed) && context.setisSidebarActive(boolVal)
+    // }
+
+    // useEffect(resizer,[]);
+
+    useEffect(()=>{
+      window.innerWidth >= 1200 && context.setIsSidebarActive(true);
+      // window.devicePixelRatio === 2 && (context.setIsSidebarActive(false), fullscreenSidebarToggle('100%', '0px'));
+    },[])
 
     const trace = (event)=>{
       setSearchText(event.target.value);
@@ -45,9 +65,7 @@ export const Topbar = ()=>{
     }
 
     const clearTag = (index)=>{
-        tags = context.storedText.filter((element,ind)=>{
-            return ind !== index;
-        });
+        tags = context.storedText.filter((element,ind) => ind !== index);
         context.setStoredText(tags);
         tags.length ? null : setcheckTags(false);
     }
@@ -55,7 +73,7 @@ export const Topbar = ()=>{
     return <>
     <div className="nav_overlay" id='nav_overlay'></div>
     <div className='topbar'>
-        <button type="button" className="sidebar_button btn btn-outline-light bi-list" onClick={toggleSidebar}></button>
+        <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
         <div className="links_container">
         <Link className="links bi-house-gear" to='/'>Shop</Link>
         <Link className='links bi-heart' to='/favourites'>Favourites</Link>
@@ -68,14 +86,12 @@ export const Topbar = ()=>{
           {context.isFiltered && <button className='remove ms-2' onClick={remove}>Remove filter</button> }
           </div>
           <div className = 'search_container'>
-              <div>
                 <input className='searchbar' placeholder="Enter Search" onChange={trace} onKeyDown = {keyPress} value={searchtext}/>
                 <button className="searchbutton bi-search" onClick={beginSearch}></button>
-              </div>
           </div>
         </div>
         <div className={(checkTags ? 'd-flex' : 'd-none') + " tags_container"}>
-        {context.storedText.map((element, index)=>{ return <button key={index} onClick={()=>{clearTag(index);}} className='tags'>{element}<span className='clear_search bi-x-lg ps-1'></span></button>})}
+        {context.storedText.map((element, index)=>{ return <button key={index} onClick={()=>{clearTag(index);}} className='tags'><span className="tag_name">{element}</span><span className='clear_search bi-x-lg ps-1'></span></button>})}
         </div>
         </> : null
         }

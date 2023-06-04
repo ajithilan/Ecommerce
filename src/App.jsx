@@ -13,14 +13,14 @@ export const AppContext = createContext();
 function App() {
     const [isFiltered , setIsFiltered] = useState(false);
     const [filterType, setFilterType] = useState('');
-    const [isactive, setIsactive] = useState(false);
+    const [isSidebarActive, setIsSidebarActive] = useState(false);
     const [storedText,setStoredText] = useState([]);
     const [button_text,  setbutton_text] = useState('Search by Category');
     var totalVal = 0;
 
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
-            setFilterType,isactive, setIsactive,storedText,setStoredText,
+            setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
             button_text,setbutton_text, totalVal}}> 
             <Router>
             <Topbar/>
