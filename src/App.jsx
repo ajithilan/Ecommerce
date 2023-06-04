@@ -16,12 +16,11 @@ function App() {
     const [isSidebarActive, setIsSidebarActive] = useState(false);
     const [storedText,setStoredText] = useState([]);
     const [button_text,  setbutton_text] = useState('Search by Category');
-    var totalVal = 0;
 
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            button_text,setbutton_text, totalVal}}> 
+            button_text,setbutton_text}}> 
             <Router>
             <Topbar/>
             <Sidebar/>

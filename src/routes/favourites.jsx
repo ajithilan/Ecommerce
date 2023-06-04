@@ -18,7 +18,7 @@ export const Favourites = ()=>{
 
     const Favt = (props)=>{
         return <div className="favt_container">
-                    <div className="favt_img_container"><img className="image" src={props.element.image} width={200} height={120} alt=''/></div>
+                    <div className="favt_img_container"><img className="favt_image" src={props.element.image} width={290} height={155} alt=''/></div>
                     <div className="mid_container"><div className="favt_title">{props.element.title}</div>
                     <div className="favt_price pt-2 text-dark">&#8377;{props.element.price}</div></div>
                     <div className="cart_favt_container">

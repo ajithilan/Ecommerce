@@ -17,29 +17,18 @@ export const Topbar = ()=>{
     },[location]);
 
     function fullscreenSidebarToggle(width, ml){
-        // context.setSidebarArrow(!(context.sidebarArrow));
-        document.querySelectorAll('.topbar , .master_container').forEach((element)=>{
-          element.style.width = width;
-          element.style.marginLeft = ml;
-        });
+        const topbar = document.querySelector('.topbar');
+        topbar.style.width = width;
+        topbar.style.marginLeft = ml;
     }
 
     const toggleSidebar = ()=>{
-      window.innerWidth >= 1200 ? (context.isSidebarActive ? fullscreenSidebarToggle('100%', '0px') : fullscreenSidebarToggle('calc(100% - 238px)','238px')) : (document.body.style.overflow = 'hidden', document.getElementById('nav_overlay').style.display = 'block');
+      window.innerWidth >= 1200 ? (context.isSidebarActive ? fullscreenSidebarToggle('100%','0px') : fullscreenSidebarToggle('calc(100% - 238px)','238px')) : (document.body.style.overflow = 'hidden', document.getElementById('nav_overlay').style.display = 'block');
       context.setIsSidebarActive(!context.isSidebarActive);
     }
 
-    // const resizer = window.onresize = ()=>{
-    //   const width = window.innerWidth;
-    //   const boolVal = width >=1200 ? true : false;
-    //   !(sidebarClosed) && context.setisSidebarActive(boolVal)
-    // }
-
-    // useEffect(resizer,[]);
-
     useEffect(()=>{
-      window.innerWidth >= 1200 && context.setIsSidebarActive(true);
-      // window.devicePixelRatio === 2 && (context.setIsSidebarActive(false), fullscreenSidebarToggle('100%', '0px'));
+      window.innerWidth >= 1200 && (context.setIsSidebarActive(true),fullscreenSidebarToggle('calc(100% - 238px)','238px'));
     },[])
 
     const trace = (event)=>{
