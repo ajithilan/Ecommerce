@@ -24,9 +24,9 @@ function App() {
             <Topbar/>
             <Sidebar/>
                 <Routes>
-                    <Route path='/' element={<Shop/>}/>
-                    <Route path='/cart' element={<Cart/>}/>
-                    <Route path='/favourites' element={<Favourites/>}/>
+                    <Route path='/Ecommerce/' element={<Shop/>}/>
+                    <Route path='/Ecommerce/cart' element={<Cart/>}/>
+                    <Route path='/Ecommerce/favourites' element={<Favourites/>}/>
                     <Route path='*' element = {<h1 className='pt-5'>Error : page not found!</h1>}/>
                 </Routes>
             </Router>
