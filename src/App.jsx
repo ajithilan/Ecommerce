@@ -1,12 +1,11 @@
 import './App.css';
 import {createContext, useState} from 'react';
-import {BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import { Shop } from './routes/shop';
 import { Cart } from './routes/cart';
 import {Favourites} from './routes/favourites';
 import { Topbar } from './components/topbar';
 import { Sidebar } from './components/sidebar';
-// import { Loader } from './PageComponents/Loader' //Loader
 
 export const AppContext = createContext();
 
