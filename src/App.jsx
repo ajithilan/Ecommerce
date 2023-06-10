@@ -22,7 +22,7 @@ function App() {
             button_text,setbutton_text}}>
                 <Routes>
                     <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
-                        <Route path='shop' element={<Shop/>}/>
+                        <Route path='/' element={<Shop/>}/>
                         <Route path='cart' element={<Cart/>}/>
                         <Route path='favourites' element={<Favourites/>}/>
                     </Route>
