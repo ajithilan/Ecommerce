@@ -21,7 +21,6 @@ function App() {
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
             button_text,setbutton_text}}>
                 <Routes>
-<<<<<<< HEAD
                     <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
                         <Route path='shop' element={<Shop/>}/>
                         <Route path='cart' element={<Cart/>}/>
@@ -29,14 +28,6 @@ function App() {
                     </Route>
                     <Route path='*' element = {<h1 className='error pt-5'>Error : Page not found!</h1>}/>
                 </Routes>    
-=======
-                    <Route path='/Ecommerce/' element={<Shop/>}/>
-                    <Route path='/Ecommerce/cart' element={<Cart/>}/>
-                    <Route path='/Ecommerce/favourites' element={<Favourites/>}/>
-                    <Route path='*' element = {<h1 className='pt-5'>Error : page not found!</h1>}/>
-                </Routes>
-            </Router>
->>>>>>> 0ac95b0e870d3476540ef0d6ae007114d4967784
         </AppContext.Provider>
     </div>;
 }
