@@ -13,7 +13,7 @@ export const Topbar = ()=>{
     const location = useLocation();
 
     useEffect(()=>{
-      setIshomepage(location.pathname === '/' ? true : false);
+      setIshomepage(location.pathname === '/shop' ? true : false);
     },[location]);
 
     function fullscreenSidebarToggle(width, ml){
@@ -64,7 +64,7 @@ export const Topbar = ()=>{
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
         <div className="links_container">
-        <Link className="links bi-house-gear" to='/'>Shop</Link>
+        <Link className="links bi-house-gear" to='/shop'>Shop</Link>
         <Link className='links bi-heart' to='/favourites'>Favourites</Link>
         <Link className="links bi-cart" to='/cart'>Cart</Link>
         </div>

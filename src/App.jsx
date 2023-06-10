@@ -1,6 +1,6 @@
 import './App.css';
 import {createContext, useState} from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route, Outlet} from 'react-router-dom';
 import { Shop } from './routes/shop';
 import { Cart } from './routes/cart';
 import {Favourites} from './routes/favourites';
@@ -19,17 +19,15 @@ function App() {
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            button_text,setbutton_text}}> 
-            <Router>
-            <Topbar/>
-            <Sidebar/>
+            button_text,setbutton_text}}>
                 <Routes>
-                    <Route path='/' element={<Shop/>}/>
-                    <Route path='/cart' element={<Cart/>}/>
-                    <Route path='/favourites' element={<Favourites/>}/>
-                    <Route path='*' element = {<h1 className='pt-5'>Error : page not found!</h1>}/>
-                </Routes>
-            </Router>
+                    <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
+                        <Route path='shop' element={<Shop/>}/>
+                        <Route path='cart' element={<Cart/>}/>
+                        <Route path='favourites' element={<Favourites/>}/>
+                    </Route>
+                    <Route path='*' element = {<h1 className='error pt-5'>Error : Page not found!</h1>}/>
+                </Routes>    
         </AppContext.Provider>
     </div>;
 }

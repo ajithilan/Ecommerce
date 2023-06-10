@@ -5,6 +5,14 @@
   background-color: #000000;
   --category_width : 360px;
 }
+.error{
+  height: 100dvh;
+  color: whitesmoke;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 *:not(input):hover {
   cursor: default;
 }
