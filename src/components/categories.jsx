@@ -7,10 +7,11 @@ export const Category = ()=>{
     const [catvisible, setCatVisible] = useState(false);
 
     const sort = (event)=>{
-        context.setbuttonText(event.target.dataset.category);
+        context.setButtonText(event.target.dataset.category);
         context.setFilterType(event.target.dataset.category);
         context.setIsFiltered(true);
-        setCatVisible(!catvisible);
+        // setCatVisible(!catvisible);
+        // document.querySelector('.dropdown_list').style.display = 'none';
     }
 
     return <div className="dropdown">

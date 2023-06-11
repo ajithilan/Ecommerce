@@ -14,21 +14,31 @@ function App() {
     const [filterType, setFilterType] = useState('');
     const [isSidebarActive, setIsSidebarActive] = useState(false);
     const [storedText, setStoredText] = useState([]);
-    const [ resizerWindow, setResizerWindow] = useState(false);
-    const [buttonText, setbuttonText] = useState('');
+    const [resizerWindow, setResizerWindow] = useState(false);
+    const [defaultButtonText, setDefaultButtonText] = useState('');
+    const [buttonText, setButtonText] = useState('');
 
-    window.onresize = ()=>{
-        setResizerWindow(window.innerWidth <= 572 ? true : false);
+    const resizerHandle = ()=>{
+        window.innerWidth <= 572 ? (
+            setResizerWindow(true),
+            setDefaultButtonText('Category')
+        ) : (
+            setResizerWindow(false),
+            setDefaultButtonText('Search by Category')
+        )
     }
 
+    window.onresize = ()=>{ resizerHandle();}
+
     useEffect(()=>{
-        setbuttonText(resizerWindow ? 'Category' : 'Search by category');
+        resizerHandle();
+        !(isFiltered) && setButtonText(resizerWindow ? 'Category' : 'Search by category');
     },[resizerWindow]);
 
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            buttonText,setbuttonText, resizerWindow}}>
+            buttonText,setButtonText, resizerWindow, defaultButtonText}}>
                 <Routes>
                     <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
                         <Route path='/' element={<Shop/>}/>

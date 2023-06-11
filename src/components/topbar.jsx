@@ -50,7 +50,7 @@ export const Topbar = ()=>{
     }
 
     const remove = ()=>{
-        context.setbuttonText(context.tempText);
+        context.setButtonText(context.defaultButtonText);
         context.setIsFiltered(false);
     }
 
