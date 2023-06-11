@@ -11,6 +11,7 @@ export const Topbar = ()=>{
     const [isHomepage, setIshomepage] = useState(true);
     const [checkTags, setcheckTags] = useState(false);
     const location = useLocation();
+    const resizerValue = context.resizerWindow;
 
     useEffect(()=>{
       setIshomepage(location.pathname === '/' ? true : false);
@@ -49,7 +50,7 @@ export const Topbar = ()=>{
     }
 
     const remove = ()=>{
-        context.setbutton_text('Search by Category');
+        context.setbuttonText(context.tempText);
         context.setIsFiltered(false);
     }
 
@@ -64,18 +65,18 @@ export const Topbar = ()=>{
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
         <div className="links_container">
-        <Link className="links bi-house-gear" to='/'>Shop</Link>
-        <Link className='links bi-heart' to='/favourites'>Favourites</Link>
-        <Link className="links bi-cart" to='/cart'>Cart</Link>
+        <Link className="links bi-house-gear" to='/'><span className="link_text">Shop</span></Link>
+        <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
+        <Link className="links bi-cart" to='/cart'><span className="link_text">Cart</span></Link>
         </div>
         { isHomepage ? <>
         <div className="sort_container">
           <div className='category_remove_container d-flex align-items-center'>
           <Category/>
-          {context.isFiltered && <button className='remove ms-2' onClick={remove}>Remove filter</button> }
+          {context.isFiltered && <button className='remove ms-2' onClick={remove}>{ resizerValue ? 'Remove' : 'Remove filter'}<span className={ resizerValue && 'bi-filter fs-5 test'}></span></button> }
           </div>
           <div className = 'search_container'>
-                <input className='searchbar' placeholder="Enter Search" onChange={trace} onKeyDown = {keyPress} value={searchtext}/>
+                <input className='searchbar' placeholder={resizerValue ? 'Search' : 'Enter Search'} onChange={trace} onKeyDown = {keyPress} value={searchtext}/>
                 <button className="searchbutton bi-search" onClick={beginSearch}></button>
           </div>
         </div>

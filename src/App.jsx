@@ -1,5 +1,5 @@
 import './App.css';
-import {createContext, useState} from 'react';
+import {createContext, useEffect, useState} from 'react';
 import { Routes, Route, Outlet} from 'react-router-dom';
 import { Shop } from './routes/shop';
 import { Cart } from './routes/cart';
@@ -13,20 +13,29 @@ function App() {
     const [isFiltered , setIsFiltered] = useState(false);
     const [filterType, setFilterType] = useState('');
     const [isSidebarActive, setIsSidebarActive] = useState(false);
-    const [storedText,setStoredText] = useState([]);
-    const [button_text,  setbutton_text] = useState('Search by Category');
+    const [storedText, setStoredText] = useState([]);
+    const [ resizerWindow, setResizerWindow] = useState(false);
+    const [buttonText, setbuttonText] = useState('');
+
+    window.onresize = ()=>{
+        setResizerWindow(window.innerWidth <= 572 ? true : false);
+    }
+
+    useEffect(()=>{
+        setbuttonText(resizerWindow ? 'Category' : 'Search by category');
+    },[resizerWindow]);
 
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            button_text,setbutton_text}}>
+            buttonText,setbuttonText, resizerWindow}}>
                 <Routes>
                     <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
-                        <Route exact path='/' element={<Shop/>}/>
+                        <Route path='/' element={<Shop/>}/>
                         <Route path='cart' element={<Cart/>}/>
                         <Route path='favourites' element={<Favourites/>}/>
                     </Route>
-                    <Route path='*' element = {<h1 className='error pt-5'>Error : Page not found!</h1>}/>
+                    <Route path='*' element = {<h1 className='error'>Error : Page not found!</h1>}/>
                 </Routes>    
         </AppContext.Provider>
     </div>;
