@@ -17,6 +17,7 @@ function App() {
     const [resizerWindow, setResizerWindow] = useState(false);
     const [defaultButtonText, setDefaultButtonText] = useState('');
     const [buttonText, setButtonText] = useState('');
+    const [isHalfscreen, setIsHalfscreen] = useState();
 
     const resizerHandle = ()=>{
         window.innerWidth <= 572 ? (
@@ -25,12 +26,15 @@ function App() {
         ) : (
             setResizerWindow(false),
             setDefaultButtonText('Search by Category')
-        )
+        );
+        const topbar = document.querySelector('.topbar');
+        !(isHalfscreen) && (window.innerWidth <= 1200 && (setIsSidebarActive(false), topbar.style.width = '100%', topbar.style.marginLeft = 0));
     }
 
     window.onresize = ()=>{ resizerHandle();}
 
     useEffect(()=>{
+        setIsHalfscreen(window.innerWidth <= 1200 ? true : false);
         resizerHandle();
         !(isFiltered) && setButtonText(resizerWindow ? 'Category' : 'Search by category');
     },[resizerWindow]);
