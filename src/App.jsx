@@ -1,5 +1,5 @@
 import './App.css';
-import {createContext, useEffect, useState} from 'react';
+import {createContext, useEffect, useRef, useState} from 'react';
 import { Routes, Route, Outlet} from 'react-router-dom';
 import { Shop } from './routes/shop';
 import { Cart } from './routes/cart';
@@ -14,37 +14,48 @@ function App() {
     const [filterType, setFilterType] = useState('');
     const [isSidebarActive, setIsSidebarActive] = useState(false);
     const [storedText, setStoredText] = useState([]);
-    const [resizerWindow, setResizerWindow] = useState(false);
-    const [defaultButtonText, setDefaultButtonText] = useState('');
+    const [resizerWindowforMobile, setResizerWindowforMobile] = useState(false);
     const [buttonText, setButtonText] = useState('');
-    const [isHalfscreen, setIsHalfscreen] = useState();
+    const [isHalfscreen, setIsHalfscreen] = useState(undefined);
 
     const resizerHandle = ()=>{
-        window.innerWidth <= 572 ? (
-            setResizerWindow(true),
-            setDefaultButtonText('Category')
-        ) : (
-            setResizerWindow(false),
-            setDefaultButtonText('Search by Category')
-        );
-        const topbar = document.querySelector('.topbar');
-        !(isHalfscreen) && (window.innerWidth <= 1200 && (setIsSidebarActive(false), topbar.style.width = '100%', topbar.style.marginLeft = 0));
+        setResizerWindowforMobile(window.innerWidth <= 600 ? true : false);
+        setIsHalfscreen(window.innerWidth <=1200 ? true : false);
     }
 
-    window.onresize = ()=>{ resizerHandle();}
+    function fullscreenSidebarToggle(width, ml){
+        const topbar = document.querySelector('.topbar');
+        topbar.style.width = width;
+        topbar.style.marginLeft = ml;
+        topbar.style.transition = '.3s ease-in-out';
+    }
+
+    function halfscreenResizer(){
+        isHalfscreen ? (setIsSidebarActive(false), fullscreenSidebarToggle('100%','0px')):
+        (fullscreenSidebarToggle('calc(100% - 238px)','238px'),
+        document.body.style.overflow = 'auto',
+        document.getElementById('nav_overlay').style.display = 'none',
+        setIsSidebarActive(true));
+    }
 
     useEffect(()=>{
-        setIsHalfscreen(window.innerWidth <= 1200 ? true : false);
+        halfscreenResizer();
+    },[isHalfscreen])
+
+    window.onresize = ()=>{
         resizerHandle();
-        !(isFiltered) && setButtonText(resizerWindow ? 'Category' : 'Search by category');
-    },[resizerWindow]);
+    }
+
+    useEffect(()=>{
+        resizerHandle();
+    },[resizerWindowforMobile]);
 
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            buttonText,setButtonText, resizerWindow, defaultButtonText}}>
+            buttonText,setButtonText,resizerWindowforMobile}}>
                 <Routes>
-                    <Route element={<><Topbar/><Sidebar/><Outlet/></>}>
+                    <Route element={<><Topbar fullscreenSidebarToggle={fullscreenSidebarToggle}/><Sidebar/><Outlet/></>}>
                         <Route path='/' element={<Shop/>}/>
                         <Route path='cart' element={<Cart/>}/>
                         <Route path='favourites' element={<Favourites/>}/>

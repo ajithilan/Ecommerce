@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import { AppContext } from "../App"
 import { Category } from "./categories"
 
-export const Topbar = ()=>{
+export const Topbar = ({fullscreenSidebarToggle})=>{
     const context = useContext(AppContext);
 
     var tags = [];
@@ -11,20 +11,16 @@ export const Topbar = ()=>{
     const [isHomepage, setIshomepage] = useState(true);
     const [checkTags, setcheckTags] = useState(false);
     const location = useLocation();
-    const resizerValue = context.resizerWindow;
+    const resizerValue = context.resizerWindowforMobile;
 
     useEffect(()=>{
       setIshomepage(location.pathname === '/' ? true : false);
     },[location]);
 
-    function fullscreenSidebarToggle(width, ml){
-        const topbar = document.querySelector('.topbar');
-        topbar.style.width = width;
-        topbar.style.marginLeft = ml;
-    }
-
     const toggleSidebar = ()=>{
-      window.innerWidth > 1200 ? (context.isSidebarActive ? fullscreenSidebarToggle('100%','0px') : fullscreenSidebarToggle('calc(100% - 238px)','238px')) : (document.body.style.overflow = 'hidden', document.getElementById('nav_overlay').style.display = 'block');
+      window.innerWidth > 1200 ? (context.isSidebarActive ?
+        fullscreenSidebarToggle('100%','0px') : fullscreenSidebarToggle('calc(100% - 238px)','238px')) :
+        (document.body.style.overflow = 'hidden', document.getElementById('nav_overlay').style.display = 'block');
       context.setIsSidebarActive(!context.isSidebarActive);
     }
 
@@ -65,9 +61,9 @@ export const Topbar = ()=>{
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
         <div className="links_container">
-        <Link className="links bi-house-gear" to='/'><span className="link_text">Shop</span></Link>
+        <Link className="links bi-house" to='/'><span className="link_text">Shop</span></Link>
         <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
-        <Link className="links bi-cart" to='/cart'><span className="link_text">Cart</span></Link>
+        <Link className="links bi-cart3" to='/cart'><span className="link_text">Cart</span></Link>
         </div>
         { isHomepage ? <>
         <div className="sort_container">
