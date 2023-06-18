@@ -17,6 +17,8 @@ function App() {
     const [resizerWindowforMobile, setResizerWindowforMobile] = useState(false);
     const [buttonText, setButtonText] = useState('');
     const [isHalfscreen, setIsHalfscreen] = useState(undefined);
+    const [dropdownActive, setDropdownActive] = useState(false);
+    const filterStateRef = useRef();
 
     const resizerHandle = ()=>{
         setResizerWindowforMobile(window.innerWidth <= 600 ? true : false);
@@ -53,7 +55,7 @@ function App() {
     return <div className = 'App'>
         <AppContext.Provider value={{isFiltered,setIsFiltered,filterType,
             setFilterType,isSidebarActive, setIsSidebarActive,storedText,setStoredText,
-            buttonText,setButtonText,resizerWindowforMobile}}>
+            buttonText,setButtonText,resizerWindowforMobile, filterStateRef, dropdownActive, setDropdownActive}}>
                 <Routes>
                     <Route element={<><Topbar fullscreenSidebarToggle={fullscreenSidebarToggle}/><Sidebar/><Outlet/></>}>
                         <Route path='/' element={<Shop/>}/>

@@ -8,11 +8,22 @@ export const Category = ()=>{
         context.setButtonText(event.target.dataset.category);
         context.setFilterType(event.target.dataset.category);
         context.setIsFiltered(true);
-        navigator.userAgentData.mobile && (document.querySelector('.dropdown_list').style.display = 'none')
+        context.filterStateRef.current = 'filtered';
+        document.querySelector('.category_button').classList.add(context.filterStateRef.current);
+        navigator.userAgentData.mobile && (document.querySelector('.dropdown_list').style.display = 'none');
     }
 
     const handleClick = ()=>{
-            navigator.userAgentData.mobile && (document.querySelector('.dropdown_list').style.display = 'block');
+            navigator.userAgentData.mobile &&
+            ((document.querySelector('.dropdown_list').style.display = 'block'),
+            setTimeout(() => {
+                context.setDropdownActive(true);
+            }, 1000));
+    }
+
+    document.onclick = (e)=>{
+        (navigator.userAgentData.mobile && context.dropdownActive) &&
+        (e.target.className !== '.categories' && (document.querySelector('.dropdown_list').style.display = 'none',context.setDropdownActive(false)));
     }
 
     return <div className="dropdown">
