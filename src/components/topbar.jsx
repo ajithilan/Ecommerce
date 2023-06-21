@@ -48,6 +48,7 @@ export const Topbar = ({fullscreenSidebarToggle})=>{
     const remove = ()=>{
         context.setButtonText(context.defaultButtonText);
         context.setIsFiltered(false);
+        document.querySelector('.category_button').classList.remove(context.filterStateRef.current);
     }
 
     const clearTag = (index)=>{
@@ -56,12 +57,19 @@ export const Topbar = ({fullscreenSidebarToggle})=>{
         tags.length ? null : setcheckTags(false);
     }
 
+    const handleLink = (e)=>{
+      document.querySelectorAll('.links').forEach((link)=>{
+        link.classList.remove('active')
+      });
+      e.target.classList.add('active');
+    }
+
     return <>
     <div className="nav_overlay" id='nav_overlay'></div>
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
-        <div className="links_container">
-        <Link className="links bi-house" to='/'><span className="link_text">Shop</span></Link>
+        <div className="links_container" onClick={handleLink}>
+        <Link className="links bi-house active" to='/'><span className="link_text">Shop</span></Link>
         <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
         <Link className="links bi-cart3" to='/cart'><span className="link_text">Cart</span></Link>
         </div>

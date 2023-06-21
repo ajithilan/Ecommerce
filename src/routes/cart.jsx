@@ -3,10 +3,15 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { removeFromCartArray } from "../features/cart";
 import { Quantity } from "../components/quantity";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 export const Cart = ()=>{
+    const context = useContext(AppContext);
     const cartSel = useSelector((state)=>state.cart.value);
     const dispatch = useDispatch();
+    const resize = context.favtResizer;
+    const imageResize = context.favtButtonsResizer;
     var cartTotal = 0;
 
     const remove = (asin)=>{
@@ -15,10 +20,10 @@ export const Cart = ()=>{
 
     const Item = (props)=>{
         return <div className="items_container">
-                    <div className="item_img_container"><img className="cart_image" src={props.element.image} width={280} height={160} alt=''/></div>
+                    <div className="item_img_container"><img className="cart_image" src={props.element.image} width={imageResize ? 240 : 280} height={imageResize ? 130 : 160} alt=''/></div>
                     <div className="item_mid_container"><div><div className="item_title">{props.element.title}</div><h6 className='text-success fw-bold'>In stock</h6></div>
                     <div className="d-flex"><Quantity element = {props.element}/>
-                    <span>|</span><span onClick={()=>{remove(props.element.asin)}} className="remove_item"> Remove this product </span></div>
+                    <span onClick={()=>{remove(props.element.asin)}} className={"remove_item " + (resize && "bi-cart-x")}>{ !resize && "Remove this product" }</span></div>
                     </div>
                     <div className="item_price text-dark fw-bold"><h5><b>Price</b></h5>&#8377;
                     {
