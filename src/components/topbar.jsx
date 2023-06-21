@@ -68,10 +68,10 @@ export const Topbar = ({fullscreenSidebarToggle})=>{
     <div className="nav_overlay" id='nav_overlay'></div>
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
-        <div className="links_container">
-        <Link className="links bi-house" onClick={handleLink} to='/'><span className="link_text">Shop</span></Link>
-        <Link className='links bi-heart' onClick={handleLink} to='/favourites'><span className="link_text">Favourites</span></Link>
-        <Link className="links bi-cart3" onClick={handleLink} to='/cart'><span className="link_text">Cart</span></Link>
+        <div className="links_container" onClick={handleLink}>
+        <Link className="links bi-house active" to='/'><span className="link_text">Shop</span></Link>
+        <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
+        <Link className="links bi-cart3" to='/cart'><span className="link_text">Cart</span></Link>
         </div>
         { isHomepage ? <>
         <div className="sort_container">

@@ -2,10 +2,15 @@ import { product_details } from "../rawdata/data";
 import { useDispatch, useSelector} from "react-redux";
 import { removeFromFavArray } from "../features/favourite";
 import { updateCartArray } from "../features/cart";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
 export const Favourites = ()=>{
+    const context = useContext(AppContext);
     const favSel = useSelector((state)=>state.favourite.value);
     const cartSel = useSelector((state)=> state.cart.value);
+    const imageW = context.favtResizer;
+    const buttonW = context.favtButtonsResizer;
     const dispatch = useDispatch();
     
     const cart = (asin, price)=>{
@@ -18,12 +23,17 @@ export const Favourites = ()=>{
 
     const Favt = (props)=>{
         return <div className="favt_container">
-                    <div className="favt_img_container"><img className="favt_image" src={props.element.image} width={290} height={155} alt=''/></div>
+                    <div className="favt_img_container"><img className="favt_image" src={props.element.image} width={imageW ? 240 : 290} height={imageW ? 130 : 155} alt=''/></div>
                     <div className="mid_container"><div className="favt_title">{props.element.title}</div>
-                    <div className="favt_price pt-2 text-dark">&#8377;{props.element.price}</div></div>
+                    <div className="favt_price pt-2 text-dark fs-5">&#8377;{props.element.price}</div></div>
                     <div className="cart_favt_container">
-                    <button className="addfavt_tocart" id={props.element.asin} onClick={()=>{cart(props.element.asin , parseInt((props.element.price).replace(',','')))}} disabled={cartSel.some((obj)=>obj.id === props.element.asin)}>{cartSel.some((obj)=>obj.id === props.element.asin)? 'Item already in cart' : 'Add item to cart'}</button>
-                    <button className="remove_favt" id={props.element.asin} onClick={removeFavourite}>Remove favourite</button>
+                    <button className={"addfavt_tocart " + (buttonW && (cartSel.some((obj)=>obj.id === props.element.asin) ? "bi-cart-check" : "bi-cart-plus"))} id={props.element.asin}
+                        onClick={()=>{cart(props.element.asin , parseInt((props.element.price).replace(',','')))}}
+                        disabled={cartSel.some((obj)=>obj.id === props.element.asin)}>{
+                            !buttonW && (cartSel.some((obj)=>obj.id === props.element.asin)? 'Item added to cart' : 'Add item to cart')
+                        }
+                    </button> 
+                    <button className={"remove_favt " + (buttonW && "bi-trash")} id={props.element.asin} onClick={removeFavourite}>{!buttonW && "Remove favourite"}</button>
                     </div>
                 </div>;
     }

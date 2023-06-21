@@ -16,7 +16,7 @@ export const Quantity = (props)=>{
     }
     
 
-    return  <div className="d-flex pe-5">
+    return  <div className="quantity_container d-flex">
         <button className="minus_btn hovr" onClick={()=>{alt(props.element.asin , 'decrement')}}><b>-</b></button>
         <span className="quantity">{
             cartSel.map((obj)=>{

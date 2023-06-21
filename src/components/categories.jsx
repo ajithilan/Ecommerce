@@ -28,11 +28,11 @@ export const Category = ()=>{
 
     return <div className="dropdown">
         <button className='category_button' onClick={handleClick} >{context.isFiltered ? context.buttonText : (context.resizerWindowforMobile ? 'Category' : 'Search by Category')}</button>
-            <div className='dropdown_list'>
-                <div className='categories' data-category = 'Smartphone' onClick={sort}><span className='bi-phone-fill'>Smartphone</span></div>
-                <div className='categories' data-category = 'Laptop' onClick={sort}><span className='bi-laptop-fill'>Laptop</span></div>
-                <div className='categories' data-category = 'Smartwatch' onClick={sort}><span className='bi-smartwatch'>Smartwatch</span></div>
-                <div className='categories' data-category = 'Speaker' onClick={sort}><span className='bi-speaker-fill'>Speaker</span></div>
+            <div className='dropdown_list' onClick={sort}>
+                <div className='categories' data-category = 'Smartphone'><span className='bi-phone-fill'>Smartphone</span></div>
+                <div className='categories' data-category = 'Laptop'><span className='bi-laptop-fill'>Laptop</span></div>
+                <div className='categories' data-category = 'Smartwatch'><span className='bi-smartwatch'>Smartwatch</span></div>
+                <div className='categories' data-category = 'Speaker'><span className='bi-speaker-fill'>Speaker</span></div>
             </div>
     </div>;
 
