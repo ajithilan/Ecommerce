@@ -35,7 +35,7 @@ export const Topbar = ({fullscreenSidebarToggle})=>{
     const beginSearch = ()=>{
       var temp = searchtext.trim();
       temp !== '' && context.setStoredText([...context.storedText, temp]);
-      context.storedText !== [] && setcheckTags(true);
+      context.storedText.length !== 0 && setcheckTags(true); //check for value
       setSearchText('');
     }
 
@@ -57,21 +57,22 @@ export const Topbar = ({fullscreenSidebarToggle})=>{
         tags.length ? null : setcheckTags(false);
     }
 
-    const handleLink = (e)=>{
-      document.querySelectorAll('.links').forEach((link)=>{
-        link.classList.remove('active')
-      });
-      e.target.classList.add('active');
+    const handleActiveLink = (e)=>{
+      e.target.tagName === 'A' && (
+        !e.target.classList.contains('active') && (
+          document.querySelectorAll('.links').forEach((el)=>{(el.classList.contains('active') && el.classList.remove('active'))}
+          ), e.target.classList.add('active'))
+        );
     }
-
+    
     return <>
     <div className="nav_overlay" id='nav_overlay'></div>
     <div className='topbar'>
         <button type="button" className={'sidebar_button btn btn-outline-light ' + (context.isSidebarActive ? 'bi-arrow-bar-left' : 'bi-list')} onClick={toggleSidebar}></button>
-        <div className="links_container" onClick={handleLink}>
-        <Link className="links bi-house active" to='/'><span className="link_text">Shop</span></Link>
-        <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
-        <Link className="links bi-cart3" to='/cart'><span className="link_text">Cart</span></Link>
+        <div className="links_container" onClick={(e)=>handleActiveLink(e)}>
+          <Link className="links bi-house active" to='/'><span className="link_text">Shop</span></Link>
+          <Link className='links bi-heart' to='/favourites'><span className="link_text">Favourites</span></Link>
+          <Link className="links bi-cart3" to='/cart'><span className="link_text">Cart</span></Link>
         </div>
         { isHomepage ? <>
         <div className="sort_container">

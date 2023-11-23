@@ -38,7 +38,7 @@ export const Favourites = ()=>{
                 </div>;
     }
 
-    return <div className="favt_master_container">
+    return <div className="favt_master_container" style={ favSel.length !== 0 ? {paddingTop : '95px'} : {justifyContent: 'center'}}>
         {   
             (favSel.length === 0) ? <h2>You have not saved any favourites!</h2> :
             favSel.map((id)=>{
