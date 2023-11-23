@@ -36,7 +36,7 @@ export const Cart = ()=>{
                 </div>;
     }
 
-    return <div className="cart_master_container">
+    return <div className="cart_master_container" style={ cartSel.length !== 0 ? {paddingTop : '95px'} : {justifyContent: 'center'}}>
         {   
             (cartSel.length === 0) ? <h2>You have no items in your cart!</h2> :
             product_details.map((product)=>{
